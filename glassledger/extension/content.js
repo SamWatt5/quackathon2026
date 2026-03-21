@@ -1,9 +1,7 @@
 const API_URL = "http://localhost:5000/api";
 const FRONTEND_URL = "http://localhost:5173";
 
-chrome.storage.local.set({ "gl-mode": "all" }).then(() => {
-    console.log("Value is set");
-});
+chrome.storage.local.set({ "gl-mode": "all" });
 
 const style = document.createElement("style");
 style.textContent = `
