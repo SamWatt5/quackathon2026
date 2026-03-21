@@ -66,7 +66,7 @@
                     {:else}
                         {#each people as person}
                             <div>
-                                <a href="/person/{person.id}">{person.name}</a>
+                                <a href="/profile/{person.id}">{person.name}</a>
                                 <span>{person.role}</span>
                             </div>
                         {/each}
@@ -75,13 +75,7 @@
                     <h1>Sign in</h1>
                     <button class="btn btn-subscribed text-decoration-none" on:click={signInWithGoogle}>Sign in with Google</button>
                 {/if}
-        </div>  
-        
-        
-    </section>
+            </div>
+        </section>
     </div>
-    
 </main>
-    
-    
-

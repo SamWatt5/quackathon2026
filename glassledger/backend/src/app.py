@@ -16,6 +16,14 @@ DB = "glass_ledger.db"
 
 
 def query(sql, params=()):
+    """
+    Executes a SQL query against the SQLite database and returns the results as a list of dictionaries.
+    Args:
+    - sql (str): The SQL query to execute.
+    - params (tuple): Optional parameters to pass to the SQL query.
+    Returns:
+    - List[Dict]: A list of dictionaries representing the rows returned by the query.
+    """
     con = sqlite3.connect(DB)
     con.row_factory = sqlite3.Row
     rows = con.execute(sql, params).fetchall()
@@ -25,6 +33,13 @@ def query(sql, params=()):
 
 @app.get("/api/person/<int:id>")
 def get_person(id):
+    """Retrieves detailed information about a specific person, including their transactions and flags.
+    Args:
+    - id (int): The unique identifier of the person to retrieve.
+    Returns:
+    - JSON: A JSON object containing the person's details, transactions, and flags, or an
+      error message if the person is not found.
+    """
     people = query("SELECT * FROM people WHERE id = ?", (id,))
     if not people:
         return jsonify({"error": "not found"}), 404
