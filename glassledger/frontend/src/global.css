@@ -427,3 +427,53 @@ footer .row p{
 .btn:hover {
   transform: scale(1.08); 
 }
+
+.log-in-container{
+    min-height: 75vh; 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+.log-in {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline: auto; /* Changed from 180px for better responsiveness */
+    max-width: 600px;    /* Optional: prevents the card from being too wide */
+    padding: 24px;       /* Increased padding for better breathing room */
+    border: 1px solid var(--White);
+    border-radius: 10px;
+    background-color: var(--Grey);
+    color: var(--White);
+}
+
+.log-in-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    /* CRITICAL: Centers children horizontally */
+    justify-content: center;
+    width: 100%;
+    text-align: center;     /* Ensures text within p tags is centered */
+}
+
+.log-in-col h1 {
+    margin-bottom: 1rem;    /* Adds space below the heading */
+}
+
+/* Match the class used in your HTML: btn-subscribed */
+.log-in-col .btn-subscribed {
+    background-color: var(--Grey);
+    color: var(--White);
+    border: 1px solid var(--White);
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-top: 10px;       /* Space above the button */
+    transition: 0.3s;
+}
+
+.log-in-col .btn-subscribed:hover {
+    background-color: var(--White);
+    color: var(--Black);
+}
