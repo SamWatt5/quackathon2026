@@ -175,6 +175,7 @@ nav{
     background-color: var(--PrimaryRed);
 }
 
+
 .card-container .avatar.is_Green{
     background-color: var(--Green);
     color: var(--DarkGreen);
@@ -208,6 +209,12 @@ nav{
     justify-content: center;
     width: 16% !important;
 
+}
+@media (max-width:575px){
+    .card-container .col-avatar{
+        width: 100% !important;
+        display: block;
+    }
 }
 .card-container .avatar{
     background-color: #931621;
@@ -284,7 +291,10 @@ nav{
     border-radius: 10px;
 
     padding-inline: 5px;
-    white-space: nowrap;
+    white-space: normal;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important; 
+    display: inline-block;
     
 }
 .card-container .tag-flagged{
@@ -299,6 +309,11 @@ nav{
     border-radius: 10px
 }
 
+@media (max-width:575px){
+    .card-container .btn-subscribed{
+       margin-top: 20px;
+    }
+}
 .row-stats{
     margin-block: 24px ;
 }
