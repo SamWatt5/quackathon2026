@@ -1,3 +1,52 @@
+<script>
+    import { onMount } from "svelte";
+
+    let personID = 0;
+    let name = $state('');
+    let party = $state('');
+    let role = $state('');
+    let transactions = $state([]);
+    let transparency_score = $state(0);
+    let flags = $state([]);
+
+    // Use $derived() for initials so it recalculates whenever 'name' changes
+    let initials = $derived(
+        name ? name.split(' ').filter(Boolean).map(n => n[0]).join('').toUpperCase() : '?'
+    );
+
+    onMount(async () => {
+
+        const url = new URL(window.location.href);
+        const queryParams = new URLSearchParams(url.search);
+
+        personID = Number(queryParams.get('id') ?? 0);
+
+        if (!personID) {
+            console.error('No id provided in URL');
+            return;
+        }
+
+        // 2. Fetch Data
+        try {
+            const response = await fetch(`http://127.0.0.1:5000/api/person/${personID}`);
+            const data = await response.json();
+
+            // 3. Destructure parameters into variables
+            // This is the "Easy" magic part!
+            ({ name, party, role, transactions, transparency_score, flags } = data);
+
+            
+            
+            console.log("Variables updated:", name, party);
+        } catch (error) {
+            console.error("Fetch failed:", error);
+        }
+
+        
+    });
+
+</script>
+
 <header id="top">
     <nav class="sticky-top navbar navbar-expand-lg navbar-light mt-0" style="border-bottom: 2px solid; margin-top: 5px; width: 100%;" aria-label="Main navigation for Glass Ledger">
         <div class="container-fluid mx-1 mx-md-4">
@@ -29,51 +78,19 @@
             </div>
         </div>
     </nav>
-    <script>
-        import { onMount } from "svelte";
-        import { apiData, drinkNames } from './store.js';
-
-        let id = '';
-
-        onMount(() => {
-            const url = new URL(window.location.href);
-            const queryParams = new URLSearchParams(url.search);
-            id = queryParams.get('id') || 'No id provided';
-        });
-
-
-        onMount(async () => {
-        fetch(`http://127.0.0.1:5000/api/person/${id}`)
-        .then(response => response.json())
-        .then(data => {
-                console.log(data);
-            apiData.set(data);
-        }).catch(error => {
-            console.log(error);
-            return [];
-        });
-        });
-
-
-
-        
-    </script>
 </header>
 
 <main class="mt-5">
     <section class="card-container row mx-1 mx-md-4">
         <div class="col-2 col-sm-1 col-avatar">
-            <div class="avatar">JH</div>
+            <div class="avatar">{initials}</div>
         </div>
         
-        <p>Name: {name}</p>
-        <p>Age: {age}</p>
-
         <div class="col-10 col-sm-8 col-info" id="top-card">
             <div class="name-row">
-                <h2>James Harlow</h2>
+                <h2>{name}</h2>
             </div>
-            <p class="subtitle">Secretary of State for Energy · Conservative MP · Elected 2010</p>
+            <p class="subtitle">{role} · {party} · Transparency Score : {transparency_score}</p>
             <div class="tags">
                 <span class="tag tag-flagged">Flagged: conflict of interest</span>
                 <span class="tag">Energy sector</span>
