@@ -6,9 +6,9 @@
     --Grey: #272626;
     --White: #EBEBEB;
     --WhiteDarker:#a7a4a4;
-    --Green:rgb(0,255,0);
-    --Orange:rgb(255, 192, 34);
-    --Red:rgb(255,0,0);
+    --Green:rgb(15, 176, 15);
+    --Orange:rgb(249, 204, 90);
+    --Red:rgb(200, 1, 1);
     --DarkGreen:rgb(4, 119, 4);
     --DarkOrange:rgb(243, 156, 43);
     --DarkRed:rgb(154, 5, 5);
@@ -57,13 +57,19 @@ nav{
     }
 }
 
+footer{
+    max-width: 100%;
+    padding: 0 !important;
+}
 footer .row{
     border-top: 2px solid var(--PrimaryRed);
     background-color: var(--Black);
     color: var(--White);
+    padding: 0 !important;
 }
 footer .row p{
     font-size: 24px;
+    padding: 0 !important;
 }
 .navbar-light{
         background-color: var(--Black);
