@@ -1,0 +1,345 @@
+:root {
+    --PrimaryRed: #931621;
+    --SecondaryAccent: #9B5DE5;
+    --TertiaryAccent: #F15BB5;
+    --Black: #100f0f;
+    --Grey: #272626;
+    --White: #EBEBEB;
+    --WhiteDarker:#a7a4a4;
+}
+body{
+    /*Page Load animation*/
+    animation:transitionIn 0.75s;
+    /*Removes Horizontal Scrolling*/
+    overflow-x: hidden;
+    max-width: 100%;
+    background-color: var(--Black);
+}
+/*Page Load animation*/
+@keyframes transitionIn {
+    from {
+        opacity:0;
+        transform: rotateX(-10deg);
+    }
+
+    to {
+        opacity:1;
+        transform: rotate(0);
+    }
+}
+
+/*Makes longer words responsive*/
+.text-wrap {
+    word-wrap: break-word; /* Break long words */
+    overflow-wrap: break-word; /* Alternative property for breaking long words */
+}
+
+/* Navbar animated Burger Menu Adapted from https://github.com/haydn5/animated-navigation-safari-fix/tree/main */
+
+nav{
+    padding-inline: 120px;
+}
+@media (max-width: 900px){
+    nav{
+        padding-inline: 50px;
+    }
+}
+
+.navbar-light{
+        background-color: var(--Black);
+}
+
+@media (max-width: 600px){
+    .navbar-light{
+        background-color: var(--Black);
+    }
+}
+
+
+.nav-link:hover {               
+    color: var(--SecondaryAccent) !important;
+}   
+
+.nav-link {
+    color: var(--White) !important;
+    transition: 0.3s;
+}
+
+.nav-link{
+    font-size: 24px;
+}
+.navbar-brand h2{
+    color: var(--White);
+}
+.navbar-toggler {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    transition: .5s ease-in-out;
+    border: 0 !important;
+}
+
+.navbar-toggler,
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    box-shadow: none !important;
+    border: 0 !important;
+    position: relative;
+}
+
+.navbar-toggler span {
+    margin: 0;
+    padding: 0;
+}
+
+.toggler-icon {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: var(--Black);
+    border-radius: 1px;
+    border: 0 !important;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+}
+
+.middle-bar {
+    margin-top: 0px;
+}
+
+
+/* State when the navbar is collapsed */
+
+.navbar-toggler.collapsed .top-bar {
+    position: absolute;
+    top: 0px;
+    transform: rotate(0deg);
+}
+
+.navbar-toggler.collapsed .middle-bar {
+    opacity: 1;
+    position: absolute;
+    top: 10px;
+    filter: alpha(opacity=100);
+}
+
+.navbar-toggler.collapsed .bottom-bar {
+    position: absolute;
+    top: 20px;
+    transform: rotate(0deg);
+}
+
+/* when navigation is clicked */
+
+.navbar-toggler .top-bar {
+    top: inherit;
+    transform: rotate(135deg);
+}
+
+.navbar-toggler .middle-bar {
+    opacity: 0;
+    top: inherit;
+    filter: alpha(opacity=0);
+}
+
+.navbar-toggler .bottom-bar {
+    top: inherit;
+    transform: rotate(-135deg);
+}
+
+/* Color of 3 lines */
+
+.navbar-toggler.collapsed .toggler-icon {
+    background: linear-gradient( 263deg, var(--White) 0%, var(--PrimaryRed) 100% );
+}
+
+.text-primary-red{
+    color: var(--PrimaryRed);
+}
+
+
+.avatar{
+    background-color: var(--PrimaryRed);
+}
+.card-container{
+    display: flex;
+    padding: 12px;
+    border: 1px solid var(--White);
+    border-radius: 10px;
+    background-color: var(--Grey);
+    color: var(--White);
+}
+
+.card-container img{
+    width: 100%;
+    margin-inline:24px;
+    border-radius: 60px;
+}
+.card-container .col-avatar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16% !important;
+
+}
+.card-container .avatar{
+    background-color: #931621;
+    color: #F15BB5;
+    font-size: 24px;
+    font-weight: 500;
+    height: 70px;
+    width: 70px;
+    padding-inline:24px;
+    border-radius: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+
+}
+.card-container .col-action{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-left: auto; /* pushes button to the far right */
+    flex-shrink: 0;
+}
+
+@media (max-width: 565px){
+    .card-container .col-action{
+        margin-top: 12px;
+    }
+}
+
+.card-container .tags{
+    padding-inline: 10x;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 4px
+}
+
+#top-card{
+    flex: 1;
+    min-width: 0; 
+}
+
+.card-container .dot{
+    margin-block: auto;
+    background-color: var(--PrimaryRed);
+    border: 0.1px solid var(--PrimaryRed);
+    border-radius: 20px;
+    height: 26px;
+    width:26px !important;
+}
+
+@media(max-width:550px){
+    .card-container .dot{
+        margin-inline: auto;
+        margin-bottom: 16px;
+    }
+  
+}
+.card-container .tag{
+    background-color: var(--Black);
+    color: var(--White);
+    border: 0.1px solid var(--White);
+    border-radius: 10px;
+
+    padding-inline: 5px;
+    white-space: nowrap;
+    
+}
+.card-container .tag-flagged{
+    background-color: var(--SecondaryAccent);
+    color: var(--TertiaryAccent);
+    border: var(--TertiaryAccent);
+}
+.card-container .btn-subscribed{
+    background-color: var(--Grey);
+    color: var(--White);
+    border: 1px solid var(--White);
+    border-radius: 10px
+}
+
+.row-stats{
+    margin-block: 24px ;
+}
+.row-stats .stat{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 4px;
+}
+.row-stats .stat_value{
+    color: var(--White);
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: -5px;
+}
+.row-stats .stat_label{
+    text-align: center;
+    color: var(--WhiteDarker);
+}
+
+.recent-transactions h3{
+    color: var(--White);
+}
+.transaction-card{
+    margin-bottom: 20px;
+}
+.transaction-card h4{
+    margin-bottom: 0px;
+}
+.transaction-card .col-info{
+    margin-bottom: 0px;
+    width: fit-content;
+    flex: 0, 0, auto !important;
+    
+}
+.transaction-subtitle, .transaction-title{
+    margin-bottom: 0px !important;
+    width: fit-content !important;
+}
+.transaction-details{
+    width: fit-content;
+    flex: 0 0 auto;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    gap: 0px 0px;
+    align-items: center;
+    justify-content: center;
+}
+@media (max-width:790px){
+    .transaction-details{
+        margin-top: 20px;
+        margin-inline:auto;
+    }
+
+}
+.transaction-details .amount{
+    margin-right: 24px;
+    font-size: 18px;
+    display: inline-block;
+    flex-wrap: nowrap;
+    gap: 0px 0px;
+    color: var(--PrimaryRed);
+}
+.transaction-details .tag{
+    display: inline-block;
+    flex-wrap: nowrap;
+    gap: 0px 0px
+}
+.card-container #top-card{
+    flex: 1 !important;
+    min-width: 0;
+}
