@@ -66,7 +66,7 @@
                     {:else}
                         {#each people as person}
                             <div>
-                                <a href="/profile/{person.id}">{person.name}</a>
+                                <a href="/profile?id={person.id}">{person.name}</a>
                                 <span>{person.role}</span>
                             </div>
                         {/each}
