@@ -29,6 +29,35 @@
             </div>
         </div>
     </nav>
+    <script>
+        import { onMount } from "svelte";
+        import { apiData, drinkNames } from './store.js';
+
+        let id = '';
+
+        onMount(() => {
+            const url = new URL(window.location.href);
+            const queryParams = new URLSearchParams(url.search);
+            id = queryParams.get('id') || 'No id provided';
+        });
+
+
+        onMount(async () => {
+        fetch(`http://127.0.0.1:5000/api/person/${id}`)
+        .then(response => response.json())
+        .then(data => {
+                console.log(data);
+            apiData.set(data);
+        }).catch(error => {
+            console.log(error);
+            return [];
+        });
+        });
+
+
+
+        
+    </script>
 </header>
 
 <main class="mt-5">
@@ -37,6 +66,9 @@
             <div class="avatar">JH</div>
         </div>
         
+        <p>Name: {name}</p>
+        <p>Age: {age}</p>
+
         <div class="col-10 col-sm-8 col-info" id="top-card">
             <div class="name-row">
                 <h2>James Harlow</h2>
