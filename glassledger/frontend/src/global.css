@@ -6,7 +6,15 @@
     --Grey: #272626;
     --White: #EBEBEB;
     --WhiteDarker:#a7a4a4;
+    --Green:rgb(0,255,0);
+    --Orange:rgb(255, 192, 34);
+    --Red:rgb(255,0,0);
+    --DarkGreen:rgb(4, 119, 4);
+    --DarkOrange:rgb(243, 156, 43);
+    --DarkRed:rgb(154, 5, 5);
+    
 }
+
 body{
     /*Page Load animation*/
     animation:transitionIn 0.75s;
@@ -99,7 +107,7 @@ nav{
     position: absolute;
     height: 3px;
     width: 100%;
-    background: var(--Black);
+    background: var(--PrimaryRed);
     border-radius: 1px;
     border: 0 !important;
     opacity: 1;
@@ -165,6 +173,19 @@ nav{
 
 .avatar{
     background-color: var(--PrimaryRed);
+}
+
+.card-container .avatar.is_Green{
+    background-color: var(--Green);
+    color: var(--DarkGreen);
+}
+.card-container .avatar.is_Orange{
+    background-color: var(--Orange);
+    color: var(--DarkOrange);
+}
+.card-container .avatar.is_Red{
+    background-color: var(--Red);
+    color: var(--DarkRed);
 }
 .card-container{
     display: flex;
@@ -232,13 +253,21 @@ nav{
     min-width: 0; 
 }
 
-.card-container .dot{
+.dot{
     margin-block: auto;
     background-color: var(--PrimaryRed);
     border: 0.1px solid var(--PrimaryRed);
     border-radius: 20px;
     height: 26px;
     width:26px !important;
+}
+.card-container .dot.is_Green{
+    background-color: var(--Green);
+    color: var(--DarkGreen);
+}
+.card-container .dot.is_Red{
+    background-color: var(--Red);
+    color: var(--DarkRed);
 }
 
 @media(max-width:550px){
@@ -326,7 +355,7 @@ nav{
     }
 
 }
-.transaction-details .amount{
+.amount{
     margin-right: 24px;
     font-size: 18px;
     display: inline-block;
@@ -334,6 +363,16 @@ nav{
     gap: 0px 0px;
     color: var(--PrimaryRed);
 }
+.transaction-details .amount.is_Green{
+    color: var(--Green);
+}
+.transaction-details .amount.is_Orange{
+    color: var(--Orange);
+}
+.transaction-details .amount.is_Red{
+    color: var(--Red);
+}
+
 .transaction-details .tag{
     display: inline-block;
     flex-wrap: nowrap;

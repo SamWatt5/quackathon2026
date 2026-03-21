@@ -161,18 +161,18 @@ con.executemany(
 )
 
 flags = [
-    (1, 1, 'Received £22k from North Sea Ventures 18 days before sponsoring the North Sea Expansion Bill', 'high'),
-    (2, 1, 'Undisclosed directorship at Apex Capital Partners subsidiary', 'medium'),
-    (3, 3, 'Meridian Capital Group donated £50k one week after receiving a government infrastructure contract', 'high'),
-    (4, 3, 'Fenn Family Trust linked to offshore accounts in the Cayman Islands', 'high'),
-    (5, 4, 'SecureNet Solutions awarded £340m border contract 3 months after £7.8k donation', 'high'),
-    (6, 4, 'Clearview Security Ltd director is brother-in-law of Claire Ashton', 'medium'),
-    (7, 6, 'MediCorp UK lobbied for private hospital expansion bill co-sponsored by Helen Stride', 'high'),
-    (8, 6, 'Helen Stride holds undeclared share options in Pharmalex Group parent company', 'high'),
-    (9, 8, 'Armadyne Defence Systems received £2.1bn MoD contract signed by Susannah Blake', 'high'),
-    (10, 8, 'Susannah Blake attended DSEI Arms Fair as keynote speaker while approving defence budget', 'medium'),
-    (11, 10, 'Vivienne Cross voted against windfall tax on asset managers 6 days after Goldbridge donation', 'high'),
-    (12, 10, 'Cross Family Office is registered at same address as Vivienne Cross primary residence', 'high'),
+    (1, 1, 'North Sea Ventures donation', 'high'),
+    (2, 1, 'Undisclosed Apex Capital directorship', 'medium'),
+    (3, 3, 'Meridian Capital Group donation', 'high'),
+    (4, 3, 'Fenn Trust offshore links', 'high'),
+    (5, 4, 'SecureNet border contract donation', 'high'),
+    (6, 4, 'Clearview Security family ties', 'medium'),
+    (7, 6, 'MediCorp UK lobbying conflict', 'high'),
+    (8, 6, 'Undeclared Pharmalex share options', 'high'),
+    (9, 8, 'Armadyne Defence MoD contract', 'high'),
+    (10, 8, 'DSEI keynote speaker appearance', 'medium'),
+    (11, 10, 'Goldbridge asset windfall vote', 'high'),
+    (12, 10, 'Cross Family Office registration', 'high'),
 ]
 
 con.executemany(
