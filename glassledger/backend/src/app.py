@@ -1,0 +1,54 @@
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+import sqlite3
+
+app = Flask(__name__)
+CORS(app)
+
+DB = "glass_ledger.db"
+
+
+def query(sql, params=()):
+    con = sqlite3.connect(DB)
+    con.row_factory = sqlite3.Row
+    rows = con.execute(sql, params).fetchall()
+    con.close()
+    return [dict(r) for r in rows]
+
+
+@app.get("/api/person/<int:id>")
+def get_person(id):
+    people = query("SELECT * FROM people WHERE id = ?", (id,))
+    if not people:
+        return jsonify({"error": "not found"}), 404
+    person = people[0]
+    person["transactions"] = query(
+        "SELECT * FROM transactions WHERE person_id = ? ORDER BY date DESC",
+        (id,)
+    )
+    person["flags"] = query(
+        "SELECT * FROM flags WHERE person_id = ?",
+        (id,)
+    )
+    return jsonify(person)
+
+
+@app.get("/api/resolve")
+def resolve():
+    name = request.args.get("name", "").lower()
+    people = query("SELECT id, name, role FROM people")
+    for p in people:
+        if name in p["name"].lower():
+            return jsonify(p)
+    return jsonify({"error": "no match"}), 404
+
+
+@app.get("/api/explore")
+def explore():
+    return jsonify(query(
+        "SELECT id, name, role, party, transparency_score FROM people"
+    ))
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
