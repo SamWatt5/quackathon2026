@@ -10,6 +10,8 @@ dist/
 build/
 .eggs/
 
+.firebase-config
+
 # Database
 *.db
 *.sqlite
