@@ -5,16 +5,21 @@
     import { getSubscriptions } from "$lib/subscriptions";
     import { browser } from "$app/environment";
 
-    let people = [];
+    let people = $state([]);
 
-    onMount(async () => {
-        if (!browser || !$user) return;
+    $effect(() => {
+        if ($user) {
+            loadSubscriptions();
+        }
+    });
+
+    async function loadSubscriptions() {
         const ids = await getSubscriptions();
         if (ids.length === 0) return;
         const res = await fetch("http://localhost:5000/api/explore");
         const all = await res.json();
         people = all.filter((p) => ids.includes(p.id));
-    });
+    }
 </script>
 
 <header id="top">

@@ -53,9 +53,6 @@
             window.location.href = "/account";
             return;
         }
-        console.log("User:", $user.uid);
-        console.log("PersonID:", personID);
-        console.log("Subscribed:", subscribed);
 
         if (subscribed) {
             await unsubscribe(personID);
