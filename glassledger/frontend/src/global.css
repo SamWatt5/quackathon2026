@@ -14,14 +14,18 @@
     --DarkRed:rgb(154, 5, 5);
     
 }
-
+*{
+    font-family: "Funnel Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
 body{
     /*Page Load animation*/
     animation:transitionIn 0.75s;
     /*Removes Horizontal Scrolling*/
     overflow-x: hidden;
     max-width: 100%;
-    background-color: var(--Black);
+    background-color: var(--Black) !important;
 }
 /*Page Load animation*/
 @keyframes transitionIn {
@@ -53,6 +57,14 @@ nav{
     }
 }
 
+footer .row{
+    border-top: 2px solid var(--PrimaryRed);
+    background-color: var(--Black);
+    color: var(--White);
+}
+footer .row p{
+    font-size: 24px;
+}
 .navbar-light{
         background-color: var(--Black);
 }
@@ -63,19 +75,19 @@ nav{
     }
 }
 
-
-.nav-link:hover {               
-    color: var(--SecondaryAccent) !important;
-}   
-
 .nav-link {
     color: var(--White) !important;
-    transition: 0.3s;
-}
-
-.nav-link{
+    transition: ease-in-out 0.2s; 
     font-size: 24px;
 }
+
+.nav-link:hover {               
+    color: var(--PrimaryRed) !important;
+    transform: scale(1.08); 
+}   
+
+
+
 .navbar-brand h2{
     color: var(--White);
 }
@@ -173,20 +185,25 @@ nav{
 
 .avatar{
     background-color: var(--PrimaryRed);
+    transition: ease-in-out 0.5s; 
+}
+
+.avatar:hover {
+  transform: scale(1.05); 
 }
 
 
 .card-container .avatar.is_Green{
     background-color: var(--Green);
-    color: var(--DarkGreen);
+    color: var(--Black);
 }
 .card-container .avatar.is_Orange{
     background-color: var(--Orange);
-    color: var(--DarkOrange);
+    color: var(--Black);
 }
 .card-container .avatar.is_Red{
     background-color: var(--Red);
-    color: var(--DarkRed);
+    color: var(--White);
 }
 .card-container{
     display: flex;
@@ -195,7 +212,13 @@ nav{
     border-radius: 10px;
     background-color: var(--Grey);
     color: var(--White);
+    transition: ease-in-out 0.2s; 
 }
+.card-container:hover{
+    transform: scale(1.008); 
+}
+
+
 
 .card-container img{
     width: 100%;
@@ -298,9 +321,9 @@ nav{
     
 }
 .card-container .tag-flagged{
-    background-color: var(--SecondaryAccent);
-    color: var(--TertiaryAccent);
-    border: var(--TertiaryAccent);
+    background-color: var(--PrimaryRed);
+    color: var(--White);
+    border: var(--PrimaryRed);
 }
 .card-container .btn-subscribed{
     background-color: var(--Grey);
@@ -396,4 +419,11 @@ nav{
 .card-container #top-card{
     flex: 1 !important;
     min-width: 0;
+}
+
+.btn{
+    transition: ease-in-out 0.2s; 
+}
+.btn:hover {
+  transform: scale(1.08); 
 }
