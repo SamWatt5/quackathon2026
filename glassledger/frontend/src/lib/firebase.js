@@ -1,16 +1,16 @@
 import { initializeApp, getApps } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, connectAuthEmulator } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { PUBLIC_FIREBASE_API_KEY, PUBLIC_FIREBASE_AUTH_DOMAIN, PUBLIC_FIREBASE_PROJECT_ID, PUBLIC_FIREBASE_STORAGE_BUCKET, PUBLIC_FIREBASE_MESSAGING_SENDER_ID, PUBLIC_FIREBASE_APP_ID } from "$env/static/public";
 import { browser } from "$app/environment";
 
 const firebaseConfig = {
-    apiKey: PUBLIC_FIREBASE_API_KEY,
-    authDomain: PUBLIC_FIREBASE_AUTH_DOMAIN,
-    projectId: PUBLIC_FIREBASE_PROJECT_ID,
-    storageBucket: PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-    appId: PUBLIC_FIREBASE_APP_ID,
+    apiKey: "AIzaSyCghBdqOBhf7Sf-V9F-UyWSRd_CjWd12lY",
+    authDomain: "glass-ledger.firebaseapp.com",
+    projectId: "glass-ledger",
+    storageBucket: "glass-ledger.firebasestorage.app",
+    messagingSenderId: "322578464441",
+    appId: "1:322578464441:web:240b28501f7a24bc422568",
+    measurementId: "G-5HV4QJQVWD",
 };
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
