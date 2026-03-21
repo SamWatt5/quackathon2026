@@ -1,9 +1,7 @@
 const API_URL = "http://localhost:5000/api";
 const FRONTEND_URL = "http://localhost:5173";
 
-chrome.storage.local.set({ "gl-mode": "all" }).then(() => {
-    console.log("Value is set");
-});
+chrome.storage.local.set({ "gl-mode": "all" });
 
 const style = document.createElement("style");
 style.textContent = `
@@ -168,7 +166,7 @@ function showCard(person, x, y) {
                 <div style="display:flex;flex-direction:column;gap:5px;">${txRows}</div>
             </div>
             ${flagHTML}
-            <a href="${FRONTEND_URL}/?id=${person.id}" target="_blank" style="display:block;text-align:center;background:#1a1a2e;color:#fff;padding:9px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:500;">View full profile →</a>
+            <a href="${FRONTEND_URL}/profile?id=${person.id}" target="_blank" style="display:block;text-align:center;background:#1a1a2e;color:#fff;padding:9px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:500;">View full profile →</a>
         </div>
     `;
 
