@@ -1,5 +1,5 @@
-const API_URL = "http://127.0.0.1:5000/api";
-const FRONTEND_PERSON_URL = "http://127.0.0.1:5173/person";
+const API_URL = "http://localhost:5000/api";
+const FRONTEND_URL = "http://localhost:5173";
 
 chrome.storage.local.set({ "gl-mode": "all" }).then(() => {
     console.log("Value is set");
@@ -8,10 +8,26 @@ chrome.storage.local.set({ "gl-mode": "all" }).then(() => {
 const style = document.createElement("style");
 style.textContent = `
     .gl-highlight {
-        background: rgba(255,200,0,0.3);
-        border-bottom: 2px solid gold;
         cursor:pointer;
     }
+    .gl-highlight-good {
+        background: rgb(0,255,0, 0.3);
+        border-bottom: 2px solid rgb(0,255,0);
+        cursor:pointer;
+    }
+
+    .gl-highlight-medium {
+        background: rgb(255,145,0, 0.3);
+        border-bottom: 2px solid rgb(255, 145, 0);
+        cursor:pointer;
+    }
+
+    .gl-highlight-bad {
+        background: rgb(255,100,100, 0.3);
+        border-bottom: 2px solid rgb(255,0,0);
+        cursor:pointer;
+    }
+
     .gl-a {
         color:inherit;
         text-decoration: inherit;
@@ -45,12 +61,26 @@ async function scanForNames() {
     });
 }
 
+function getColourFromTransparencyScore(transparency_score) {
+    if (transparency_score > 70) {
+        return "gl-highlight-good";
+        // return "rgb(0,255,0)";
+    } else if (transparency_score > 40) {
+        // return "rgb(255,100,100)";
+        return "gl-highlight-medium";
+    } else {
+        // return "rgb(255,0,0)";
+        return "gl-highlight-bad";
+    }
+}
+
 function highlightName(el, person) {
     const regex = new RegExp(`(${person.name})`, "gi");
     el.innerHTML = el.innerHTML.replace(regex, `<span class="gl-highlight" data-id="${person.id}">$1</span>`);
 
     // now find the span we just created and attach the listener
     el.querySelectorAll(".gl-highlight").forEach((span) => {
+        span.classList.add(getColourFromTransparencyScore(person.transparency_score));
         span.addEventListener("click", async (e) => {
             e.stopPropagation();
             const id = span.dataset.id;
@@ -138,7 +168,7 @@ function showCard(person, x, y) {
                 <div style="display:flex;flex-direction:column;gap:5px;">${txRows}</div>
             </div>
             ${flagHTML}
-            <a href="${FRONTEND_PERSON_URL}/${person.id}" target="_blank" style="display:block;text-align:center;background:#1a1a2e;color:#fff;padding:9px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:500;">View full profile →</a>
+            <a href="${FRONTEND_URL}/?id=${person.id}" target="_blank" style="display:block;text-align:center;background:#1a1a2e;color:#fff;padding:9px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:500;">View full profile →</a>
         </div>
     `;
 
@@ -153,4 +183,33 @@ function showCard(person, x, y) {
     );
 }
 
-scanForNames();
+function removeHighlights() {
+    document.querySelectorAll(".gl-highlight").forEach((span) => {
+        span.replaceWith(span.textContent);
+    });
+    document.getElementById("gl-card")?.remove();
+}
+
+chrome.storage.onChanged.addListener((changes) => {
+    if (changes["gl-enabled"]) {
+        if (changes["gl-enabled"].newValue === false) {
+            // remove all highlights
+            removeHighlights();
+        } else {
+            // re-scan
+            scanForNames();
+        }
+    }
+
+    if (changes["gl-mode"]) {
+        // mode switched, re-scan with new setting
+        removeHighlights();
+        scanForNames();
+    }
+});
+
+chrome.storage.local.get("gl-enabled", (res) => {
+    if (res["gl-enabled"] !== false) {
+        scanForNames();
+    }
+});
