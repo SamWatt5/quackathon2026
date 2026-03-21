@@ -23,5 +23,5 @@ export async function getSubscriptions() {
     const uid = auth.currentUser?.uid;
     if (!uid) return [];
     const snapshot = await getDocs(collection(db, "users", uid, "subscriptions"));
-    return snapshot.docs.map((doc) => doc.data().personId);
+    return snapshot.docs.map((d) => d.data().personId);
 }

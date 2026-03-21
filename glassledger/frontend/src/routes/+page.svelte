@@ -7,37 +7,44 @@
 
     // Initial logic helper
     function getInitials(name) {
-        return name ? name.split(' ').filter(Boolean).map(n => n[0]).join('').toUpperCase() : '?';
+        return name
+            ? name
+                  .split(" ")
+                  .filter(Boolean)
+                  .map((n) => n[0])
+                  .join("")
+                  .toUpperCase()
+            : "?";
     }
 
     onMount(async () => {
         const url = new URL(window.location.href);
         const queryParams = new URLSearchParams(url.search);
-        
+
         // Get page from URL, default to 1
-        currentPage = Number(queryParams.get('page') ?? 1);
-        
+        currentPage = Number(queryParams.get("page") ?? 1);
+
         // Calculate the range of IDs (e.g., Page 1: 1-5, Page 2: 6-10)
         const startID = (currentPage - 1) * 5 + 1;
         const endID = startID + 4;
 
         try {
             const fetchPromises = [];
-            
+
             // Create 5 fetch requests simultaneously
             for (let id = startID; id <= endID; id++) {
                 fetchPromises.push(
                     fetch(`http://127.0.0.1:5000/api/person/${id}`)
-                        .then(res => res.ok ? res.json() : null)
-                        .catch(() => null) // Ignore failed IDs (e.g., if ID doesn't exist)
+                        .then((res) => (res.ok ? res.json() : null))
+                        .catch(() => null), // Ignore failed IDs (e.g., if ID doesn't exist)
                 );
             }
 
             // Wait for all 5 to finish
             const results = await Promise.all(fetchPromises);
-            
+
             // Filter out any nulls (failed fetches) and update state
-            profiles = results.filter(p => p !== null);
+            profiles = results.filter((p) => p !== null);
             loading = false;
         } catch (error) {
             console.error("Directory fetch failed:", error);
@@ -89,23 +96,20 @@
 
                 <section class="card-container row mx-1 mx-md-4 mb-4">
                     <div class="col-2 col-sm-1 col-avatar">
-                        <div class="avatar" 
-                             class:is_Green={is_Green} 
-                             class:is_Orange={is_Orange} 
-                             class:is_Red={is_Red}>
-                             {getInitials(person.name)}
+                        <div class="avatar" class:is_Green class:is_Orange class:is_Red>
+                            {getInitials(person.name)}
                         </div>
                     </div>
-                    
+
                     <div class="col-10 col-sm-8 col-info" id="top-card">
                         <div class="name-row">
                             <h2>{person.name}</h2>
                         </div>
                         <p class="subtitle">{person.role} · {person.party} · Transparency Score : {person.transparency_score}</p>
-                        
+
                         <div class="tags">
                             {#each person.flags as flag}
-                                <span class="tag" class:tag-flagged={flag.severity=="high"}>
+                                <span class="tag" class:tag-flagged={flag.severity == "high"}>
                                     Conflict: {flag.summary}
                                 </span>
                             {/each}
@@ -113,22 +117,16 @@
                     </div>
 
                     <div class="col-12 col-sm-3 col-action">
-                        <a href="/profile/?id={person.id}" class="btn btn-subscribed text-decoration-none">
-                            View Profile
-                        </a>
+                        <a href="/profile/?id={person.id}" class="btn btn-subscribed text-decoration-none"> View Profile </a>
                     </div>
                 </section>
             {/each}
         </div>
 
         <div class="text-center mt-5 mb-5 d-flex justify-content-center gap-3">
-            <button class="btn btn-dark" disabled={currentPage <= 1} onclick={() => changePage(-1)}>
-                Previous
-            </button>
+            <button class="btn btn-dark" disabled={currentPage <= 1} onclick={() => changePage(-1)}> Previous </button>
             <span class="text-white align-self-center">Page {currentPage}</span>
-            <button class="btn btn-dark" onclick={() => changePage(1)}>
-                Next
-            </button>
+            <button class="btn btn-dark" onclick={() => changePage(1)}> Next </button>
         </div>
     {/if}
 </main>

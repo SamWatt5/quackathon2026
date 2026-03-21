@@ -50,5 +50,18 @@ def explore():
     ))
 
 
+@app.get("/api/watchlist")
+def watchlist():
+    ids = request.args.get("ids", "")
+    if not ids:
+        return jsonify([])
+    id_list = [int(i) for i in ids.split(",")]
+    placeholders = ",".join("?" * len(id_list))
+    return jsonify(query(
+        f"SELECT id, name, role, party, transparency_score FROM people WHERE id IN ({placeholders})",
+        id_list
+    ))
+
+
 if __name__ == "__main__":
     app.run(debug=True)

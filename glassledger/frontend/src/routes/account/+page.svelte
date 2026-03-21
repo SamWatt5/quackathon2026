@@ -1,21 +1,19 @@
 <script>
     import { onMount } from "svelte";
     import { user, loading } from "$lib/stores/auth";
-    import { signInWithGoogle, logOut, auth } from "$lib/firebase";
-    import { getRedirectResult } from "firebase/auth";
+    import { signInWithGoogle, logOut } from "$lib/firebase";
+    import { getSubscriptions } from "$lib/subscriptions";
     import { browser } from "$app/environment";
 
+    let people = [];
+
     onMount(async () => {
-        if (!browser) return;
-        try {
-            const result = await getRedirectResult(auth);
-            if (result?.user) {
-                console.log("Redirect result user:", result.user.displayName);
-                user.set(result.user);
-            }
-        } catch (e) {
-            console.error("Redirect error:", e);
-        }
+        if (!browser || !$user) return;
+        const ids = await getSubscriptions();
+        if (ids.length === 0) return;
+        const res = await fetch("http://localhost:5000/api/explore");
+        const all = await res.json();
+        people = all.filter((p) => ids.includes(p.id));
     });
 </script>
 
@@ -26,6 +24,18 @@
     <p>{$user.displayName}</p>
     <p>{$user.email}</p>
     <button on:click={logOut}>Sign out</button>
+
+    <h2>Subscribed politicians</h2>
+    {#if people.length === 0}
+        <p>You have not subscribed to anyone yet.</p>
+    {:else}
+        {#each people as person}
+            <div>
+                <a href="/person/{person.id}">{person.name}</a>
+                <span>{person.role}</span>
+            </div>
+        {/each}
+    {/if}
 {:else}
     <h1>Sign in</h1>
     <button on:click={signInWithGoogle}>Sign in with Google</button>
