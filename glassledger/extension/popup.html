@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 260px;
+            font-family: system-ui, sans-serif;
+            background: #fff;
+            color: #111;
+        }
+
+        .header {
+            background: #1a1a2e;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 28px;
+            height: 28px;
+            background: #e63946;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .header-text {
+            flex: 1;
+        }
+
+        .header-text h1 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .header-text p {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: 1px;
+        }
+
+        .body {
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .open-btn {
+            display: block;
+            text-align: center;
+            background: #1a1a2e;
+            color: #fff;
+            padding: 9px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: opacity 0.15s;
+        }
+
+        .open-btn:hover {
+            opacity: 0.85;
+        }
+
+        .divider {
+            height: 0.5px;
+            background: #eee;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+
+        .row-label {
+            color: #333;
+        }
+
+        .row-sub {
+            font-size: 11px;
+            color: #aaa;
+            margin-top: 1px;
+        }
+
+        /* toggle switch */
+        .toggle {
+            position: relative;
+            width: 38px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            position: absolute;
+        }
+
+        .track {
+            position: absolute;
+            inset: 0;
+            background: #ddd;
+            border-radius: 99px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.2s;
+            pointer-events: none;
+        }
+
+        input:checked~.track {
+            background: #1a1a2e;
+        }
+
+        input:checked~.thumb {
+            transform: translateX(16px);
+        }
+
+        .mode-label {
+            font-size: 11px;
+            color: #888;
+            text-align: center;
+        }
+
+        .mode-label span {
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="logo">GL</div>
+        <div class="header-text">
+            <h1>Glass Ledger</h1>
+            <p>Financial transparency for the powerful</p>
+        </div>
+    </div>
+
+    <div class="body">
+
+        <a href="http://localhost:5173" target="_blank" class="open-btn">
+            Open Glass Ledger
+        </a>
+
+        <div class="divider"></div>
+
+        <div class="row">
+            <div>
+                <div class="row-label">Highlight mode</div>
+                <div class="row-sub" id="mode-desc">Highlighting all names</div>
+            </div>
+            <label class="toggle">
+                <input type="checkbox" id="mode-toggle">
+                <div class="track"></div>
+                <div class="thumb"></div>
+            </label>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="row">
+            <div>
+                <div class="row-label">Extension</div>
+                <div class="row-sub" id="enabled-desc">Active on all pages</div>
+            </div>
+            <label class="toggle">
+                <input type="checkbox" id="enabled-toggle" checked>
+                <div class="track"></div>
+                <div class="thumb"></div>
+            </label>
+        </div>
+
+    </div>
+
+    <script src="popup.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+{
+    "manifest_version": 3,
+    "name": "Glass Ledger",
+    "version": "1.0",
+    "description": "Quackathon 2026 Entry for NCR Atleos Challenge",
+
+    "permissions": [
+        "activeTab",
+        "storage"
+    ],
+
+    "host_permissions": [
+        "http://localhost:5000/*"
+    ],
+
+    "content_scripts": [
+        {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+        }
+    ],
+
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "Glass Ledger"
+    }
+}
