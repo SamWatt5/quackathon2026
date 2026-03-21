@@ -24,7 +24,9 @@
 {@render children()}
 
 <footer>
-    <div class="row text-center justify-content-center align-items-center mt-5">
-        <p>© {currentYear} <span>Glass</span> <span class="text-primary-red">Ledger</span> - All Rights Reserved</p>
-    </div>
+    <div class="container-fluid">
+		<div class="row text-center justify-content-center align-items-center mt-5">
+			<p>© {currentYear} <span>Glass</span> <span class="text-primary-red">Ledger</span> - All Rights Reserved</p>
+		</div>
+	</div>
 </footer>
