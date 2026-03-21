@@ -12,6 +12,8 @@ build/
 
 .firebase-config
 
+service-account.json
+
 # Database
 *.db
 *.sqlite

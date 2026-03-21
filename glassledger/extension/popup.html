@@ -168,7 +168,23 @@
     </div>
 
     <div class="body">
+        <div id="user-info" style="display:none;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                <div style="flex:1;">
+                    <div style="font-size:13px;font-weight:500;color:#333;" id="user-name"></div>
+                    <div style="font-size:11px;color:#aaa;">Signed in</div>
+                </div>
+                <button id="sign-out-btn"
+                    style="font-size:11px;padding:4px 8px;border:0.5px solid #ddd;border-radius:6px;background:none;cursor:pointer;color:#888;">Sign
+                    out</button>
+            </div>
+            <div class="divider"></div>
+        </div>
 
+        <button id="sign-in-btn"
+            style="display:block;width:100%;text-align:center;background:#fff;color:#333;padding:9px;border-radius:8px;font-size:13px;font-weight:500;border:0.5px solid #ddd;cursor:pointer;margin-bottom:12px;">
+            Sign in with Google
+        </button>
         <a href="http://localhost:5173" target="_blank" class="open-btn">
             Open Glass Ledger
         </a>

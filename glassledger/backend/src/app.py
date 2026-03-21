@@ -1,6 +1,13 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import sqlite3
+import firebase_admin
+from firebase_admin import credentials, firestore as fs
+
+
+cred = credentials.Certificate("service-account.json")
+firebase_admin.initialize_app(cred)
+firebase_db = fs.client()
 
 app = Flask(__name__)
 CORS(app)
@@ -61,6 +68,14 @@ def watchlist():
         f"SELECT id, name, role, party, transparency_score FROM people WHERE id IN ({placeholders})",
         id_list
     ))
+
+
+@app.get("/api/subscriptions/<uid>")
+def get_subscriptions(uid):
+    docs = firebase_db.collection("users").document(
+        uid).collection("subscriptions").stream()
+    ids = [int(doc.to_dict()["personId"]) for doc in docs]
+    return jsonify(ids)
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 const API_URL = "http://localhost:5000/api";
 const FRONTEND_URL = "http://localhost:5173";
 
-chrome.storage.local.set({ "gl-mode": "all" });
+// chrome.storage.local.set({ "gl-mode": "all" });
 
 const style = document.createElement("style");
 style.textContent = `
@@ -34,16 +34,39 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+chrome.storage.local.get("gl-enabled", (res) => {
+    if (res["gl-enabled"] === undefined) {
+        chrome.storage.local.set({ "gl-enabled": true });
+    }
+});
+
 async function getNamesFromAPI() {
-    const { mode } = await chrome.storage.local.get("gl-mode");
-    const endpoint = mode === "subscribed" ? "/watchlist" : "/explore";
-    const res = await fetch(`${API_URL}${endpoint}`);
-    const data = await res.json();
-    return data.map((p) => ({ id: p.id, name: p.name, transparency_score: p.transparency_score }));
+    const stored = await chrome.storage.local.get(["gl-mode", "gl-user"]);
+    const mode = stored["gl-mode"];
+    const user = stored["gl-user"];
+
+    if (mode === "subscribed") {
+        if (!user?.uid) {
+            console.log("GL: not logged in");
+            return [];
+        }
+        const res = await fetch(`${API_URL}/subscriptions/${user.uid}`);
+        const ids = await res.json();
+        if (ids.length === 0) return [];
+        const peopleRes = await fetch(`${API_URL}/watchlist?ids=${ids.join(",")}`);
+        const data = await peopleRes.json();
+        return data.map((p) => ({ id: p.id, name: p.name, transparency_score: p.transparency_score }));
+    } else {
+        const res = await fetch(`${API_URL}/explore`);
+        const data = await res.json();
+        return data.map((p) => ({ id: p.id, name: p.name, transparency_score: p.transparency_score }));
+    }
 }
 
 async function scanForNames() {
-    console.log("Scanning for names...");
+    const stored = await chrome.storage.local.get(["gl-mode", "gl-subscriptions"]);
+    console.log("Scanning with mode:", stored["gl-mode"]);
+    console.log("Subscriptions:", stored["gl-subscriptions"]);
 
     const people = await getNamesFromAPI();
     // console.log(names);
@@ -206,7 +229,27 @@ chrome.storage.onChanged.addListener((changes) => {
     }
 });
 
-chrome.storage.local.get("gl-enabled", (res) => {
+window.addEventListener("message", (event) => {
+    if (event.data?.type === "GL_AUTH") {
+        chrome.storage.local.set(
+            {
+                "gl-token": event.data.token,
+                "gl-user": event.data.user,
+                "gl-subscriptions": event.data.subscriptions,
+            },
+            () => {
+                console.log("GL: user saved", event.data.user.name);
+                console.log("GL: subscriptions saved", event.data.subscriptions);
+                // re-scan the page with new subscription data
+                removeHighlights();
+                scanForNames();
+            },
+        );
+    }
+});
+
+chrome.storage.local.get(["gl-enabled", "gl-mode", "gl-subscriptions"], (res) => {
+    console.log("GL storage:", res);
     if (res["gl-enabled"] !== false) {
         scanForNames();
     }
