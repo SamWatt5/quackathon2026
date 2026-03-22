@@ -483,3 +483,10 @@ footer .row p{
     background-color: var(--White);
     color: var(--Black);
 }
+
+.home-main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+}
