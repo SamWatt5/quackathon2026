@@ -41,6 +41,8 @@
                     <li class="nav-item"><a class="nav-link" href="../people?field=none">People</a></li>
                     <li class="nav-item"><a class="nav-link" href="../people?field=executive">Executives</a></li>
                     <li class="nav-item"><a class="nav-link" href="../people?field=politician">Politicians</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../people?field=journalist">Journalists</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../people?field=lobbyist">Lobbyists</a></li>
                     <li class="nav-item"><a class="nav-link" href="/">Account</a></li>
                 </ul>
             </div>

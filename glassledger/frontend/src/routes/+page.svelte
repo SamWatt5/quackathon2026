@@ -11,6 +11,8 @@
                     <li class="nav-item"><a class="nav-link" href="/people?field=none">People</a></li>
                     <li class="nav-item"><a class="nav-link" href="/people?field=executive">Executives</a></li>
                     <li class="nav-item"><a class="nav-link" href="/people?field=politician">Politicians</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/people?field=journalist">Journalists</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/people?field=lobbyist">Lobbyists</a></li>
                     <li class="nav-item"><a class="nav-link" href="/account">Account</a></li>
                 </ul>
             </div>
@@ -21,8 +23,8 @@
 <main class="mt-5 home-main">
     <section class="text-center py-5 mb-5 mx-4">
         <h1 class="display-3 text-white fw-bold">Transparency is <span class="text-primary-red">Non-Negotiable</span></h1>
-        <p class="fs-4 text-white-50 mx-auto" style="max-width: 800px;">
-            Tracking financial interests, corporate ties, and legislative influence in real-time. 
+        <p class="fs-4 text-white-50 mx-auto" style="max-width: 900px;">
+            Tracking financial interests, corporate ties, and legislative influence in real-time.<br>
             Choose a sector to begin your investigation.
         </p>
         <div class="d-flex justify-content-center gap-3 mt-4">
