@@ -1,6 +1,8 @@
 <script>
     import { onMount } from "svelte";
 
+    let field = $state(' ');
+
     let profiles = $state([]);
     let currentPage = $state(1);
     let loading = $state(true);
@@ -24,32 +26,65 @@
         // Get page from URL, default to 1
         currentPage = Number(queryParams.get("page") ?? 1);
 
+        field = String(queryParams.get("field") ?? 'none');
+
         // Calculate the range of IDs (e.g., Page 1: 1-5, Page 2: 6-10)
         const startID = (currentPage - 1) * 5 + 1;
-        const endID = startID + 4;
+        const endID = startID + 5;
 
-        try {
-            const fetchPromises = [];
+        if (field==='none'){
+            try {
+                const fetchPromises = [];
 
-            // Create 5 fetch requests simultaneously
-            for (let id = startID; id <= endID; id++) {
-                fetchPromises.push(
-                    fetch(`http://127.0.0.1:5000/api/person/${id}`)
-                        .then((res) => (res.ok ? res.json() : null))
-                        .catch(() => null), // Ignore failed IDs (e.g., if ID doesn't exist)
-                );
+                // Create 5 fetch requests simultaneously
+                for (let id = startID; id <= endID; id++) {
+                    fetchPromises.push(
+                        fetch(`http://127.0.0.1:5000/api/person/${id}`)
+                            .then((res) => (res.ok ? res.json() : null))
+                            .catch(() => null), // Ignore failed IDs (e.g., if ID doesn't exist)
+                    );
+                }
+
+                // Wait for all 5 to finish
+                const results = await Promise.all(fetchPromises);
+
+                // Filter out any nulls (failed fetches) and update state
+                profiles = results.filter((p) => p !== null);
+                loading = false;
+            } catch (error) {
+                console.error("Directory fetch failed:", error);
+                loading = false;
             }
-
-            // Wait for all 5 to finish
-            const results = await Promise.all(fetchPromises);
-
-            // Filter out any nulls (failed fetches) and update state
-            profiles = results.filter((p) => p !== null);
-            loading = false;
-        } catch (error) {
-            console.error("Directory fetch failed:", error);
-            loading = false;
         }
+        else{
+
+            try {
+                // Updated API endpoint for executives
+                const response = await fetch(`http://127.0.0.1:5000/api/people/field/${field}`);
+                profiles = await response.json();
+
+                startID
+
+                // Wait for all 5 to finish
+                const displayedPeople = profiles.slice(startID, endID);
+                const results = 
+
+                // Filter out any nulls (failed fetches) and update state
+                profiles = results.filter((p) => p !== null);
+                loading = false;
+            } catch (error) {
+                console.error("Directory fetch failed:", error);
+                loading = false;
+            }
+            
+        }
+
+        
+
+
+
+
+        
     });
 
     function changePage(step) {
@@ -73,11 +108,12 @@
 
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto fs-4 justify-content-center align-items-center">
-                    <li class="nav-item"><a class="nav-link" href="../">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/">People</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../executives">Executives</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../politicians">Politicians</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../account">Account</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account">Account</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -90,7 +126,7 @@
             <h3>Loading Transparency Data...</h3>
         </div>
     {:else}
-        <div class="profile-list">
+        <div class="profile-list col-12">
             {#each profiles as person}
                 {@const is_Green = person.transparency_score > 70}
                 {@const is_Orange = person.transparency_score <= 70 && person.transparency_score > 40}
