@@ -68,7 +68,7 @@
                 // Create 5 fetch requests simultaneously
                 displayedPeople.forEach((person, index) => {
                     fetchPromises.push(
-                        fetch(`http://127.0.0.1:5000/api/person/${id}`)
+                        fetch(`http://127.0.0.1:5000/api/person/${person.id}`)
                             .then((res) => (res.ok ? res.json() : null))
                             .catch(() => null), // Ignore failed IDs (e.g., if ID doesn't exist)
                     );
