@@ -98,7 +98,6 @@
                     <li class="nav-item"><a class="nav-link" href="../politicians">Politicians</a></li>
                     <li class="nav-item"><a class="nav-link" href="../account">Account</a></li>
                 </ul>
-                </ul>
             </div>
         </div>
     </nav>
