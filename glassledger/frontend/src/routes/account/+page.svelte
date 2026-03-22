@@ -37,12 +37,11 @@
 
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto fs-4 justify-content-center align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Account</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="../">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../people">People</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../executives">Executives</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../politicians">Politicians</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">Account</a></li>
                 </ul>
             </div>
         </div>

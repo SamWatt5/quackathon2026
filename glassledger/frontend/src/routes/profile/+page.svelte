@@ -5,6 +5,7 @@
 
     let personID = 0;
     let name = $state("");
+    let company = $state("");
     let party = $state("");
     let role = $state("");
     let transactions = $state([]);
@@ -35,7 +36,7 @@
         try {
             const response = await fetch(`http://127.0.0.1:5000/api/person/${personID}`);
             const data = await response.json();
-            ({ name, party, role, transactions, transparency_score, flags } = data);
+            ({ name, party, company, role, transactions, transparency_score, flags } = data);
 
             // check subscription status after we have the person data
             if ($user) {
@@ -91,12 +92,12 @@
 
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto fs-4 justify-content-center align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/account">Account</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="../">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../people">People</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../executives">Executives</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../politicians">Politicians</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../account">Account</a></li>
+                </ul>
                 </ul>
             </div>
         </div>
@@ -113,6 +114,11 @@
             <div class="name-row">
                 <h2>{name}</h2>
             </div>
+            <script>
+                if (!party){
+                    party = company
+                }
+            </script>
             <p class="subtitle">{role} · {party} · Transparency Score : {transparency_score}</p>
 
             <div class="tags">
