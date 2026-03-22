@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
 
-    let field = $state(' ');
+    let field = $state(" ");
 
     let profiles = $state([]);
     let currentPage = $state(1);
@@ -26,13 +26,13 @@
         // Get page from URL, default to 1
         currentPage = Number(queryParams.get("page") ?? 1);
 
-        field = String(queryParams.get("field") ?? 'none');
+        field = String(queryParams.get("field") ?? "none");
 
         // Calculate the range of IDs (e.g., Page 1: 1-5, Page 2: 6-10)
         const startID = (currentPage - 1) * 5 + 1;
         const endID = startID + 5;
         let results = [];
-        if (field==='none'){
+        if (field === "none") {
             try {
                 const fetchPromises = [];
 
@@ -55,9 +55,7 @@
                 console.error("Directory fetch failed:", error);
                 loading = false;
             }
-        }
-        else{
-
+        } else {
             try {
                 // Updated API endpoint for executives
                 const response = await fetch(`http://127.0.0.1:5000/api/people/field/${field}`);
@@ -74,7 +72,7 @@
                             .then((res) => (res.ok ? res.json() : null))
                             .catch(() => null), // Ignore failed IDs (e.g., if ID doesn't exist)
                     );
-                }
+                });
 
                 // Wait for all 5 to finish
                 results = await Promise.all(fetchPromises);
@@ -86,15 +84,7 @@
                 console.error("Directory fetch failed:", error);
                 loading = false;
             }
-            
         }
-
-        
-
-
-
-
-        
     });
 
     function changePage(step) {
