@@ -55,6 +55,15 @@ def get_person(id):
     return jsonify(person)
 
 
+@app.get("/api/people/field/<field>")
+def get_field(field):
+    people = query("SELECT * FROM people WHERE field = ?", (field,))
+    if not people:
+        return jsonify({"error": "not found"}), 404
+
+    return jsonify(people)
+
+
 @app.get("/api/resolve")
 def resolve():
     name = request.args.get("name", "").lower()
