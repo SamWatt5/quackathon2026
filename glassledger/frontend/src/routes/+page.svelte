@@ -31,7 +31,7 @@
         // Calculate the range of IDs (e.g., Page 1: 1-5, Page 2: 6-10)
         const startID = (currentPage - 1) * 5 + 1;
         const endID = startID + 5;
-
+        let results = [];
         if (field==='none'){
             try {
                 const fetchPromises = [];
@@ -46,7 +46,7 @@
                 }
 
                 // Wait for all 5 to finish
-                const results = await Promise.all(fetchPromises);
+                results = await Promise.all(fetchPromises);
 
                 // Filter out any nulls (failed fetches) and update state
                 profiles = results.filter((p) => p !== null);
@@ -63,11 +63,21 @@
                 const response = await fetch(`http://127.0.0.1:5000/api/people/field/${field}`);
                 profiles = await response.json();
 
-                startID
+                const fetchPromises = [];
 
                 // Wait for all 5 to finish
                 const displayedPeople = profiles.slice(startID, endID);
-                const results = 
+                // Create 5 fetch requests simultaneously
+                displayedPeople.forEach((person, index) => {
+                    fetchPromises.push(
+                        fetch(`http://127.0.0.1:5000/api/person/${id}`)
+                            .then((res) => (res.ok ? res.json() : null))
+                            .catch(() => null), // Ignore failed IDs (e.g., if ID doesn't exist)
+                    );
+                }
+
+                // Wait for all 5 to finish
+                results = await Promise.all(fetchPromises);
 
                 // Filter out any nulls (failed fetches) and update state
                 profiles = results.filter((p) => p !== null);
