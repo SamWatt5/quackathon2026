@@ -93,9 +93,9 @@
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto fs-4 justify-content-center align-items-center">
                     <li class="nav-item"><a class="nav-link" href="../">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../people">People</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../executives">Executives</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../politicians">Politicians</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../?field=none">People</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../?field=executive">Executives</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../?field=politician">Politicians</a></li>
                     <li class="nav-item"><a class="nav-link" href="../account">Account</a></li>
                 </ul>
             </div>
@@ -113,12 +113,7 @@
             <div class="name-row">
                 <h2>{name}</h2>
             </div>
-            <script>
-                if (!party){
-                    party = company
-                }
-            </script>
-            <p class="subtitle">{role} · {party} · Transparency Score : {transparency_score}</p>
+            <p class="subtitle">{role} · {party ? party != 'none' : company} · Transparency Score : {transparency_score}</p>
 
             <div class="tags">
                 {#each flags as flag}

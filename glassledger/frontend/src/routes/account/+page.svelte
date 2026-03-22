@@ -25,7 +25,7 @@
 <header id="top">
     <nav class="sticky-top navbar navbar-expand-lg navbar-light mt-0" style="border-bottom: 2px solid; margin-top: 5px; width: 100%;" aria-label="Main navigation for Glass Ledger">
         <div class="container-fluid mx-1 mx-md-4">
-            <a class="navbar-brand d-flex justify-content-center align-items-center" href="/" aria-label="Go to Glass Ledger home page">
+            <a class="navbar-brand d-flex justify-content-center align-items-center" href="../" aria-label="Go to Glass Ledger home page">
                 <h2 class="mb-0"><span>Glass</span> <span class="text-primary-red">Ledger</span></h2>
             </a>
 
@@ -38,9 +38,9 @@
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto fs-4 justify-content-center align-items-center">
                     <li class="nav-item"><a class="nav-link" href="../">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../people">People</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../executives">Executives</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../politicians">Politicians</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../?field=none">People</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../?field=executive">Executives</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../?field=politician">Politicians</a></li>
                     <li class="nav-item"><a class="nav-link" href="/">Account</a></li>
                 </ul>
             </div>

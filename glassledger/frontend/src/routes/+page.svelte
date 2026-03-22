@@ -1,95 +1,72 @@
 <script>
     import { onMount } from "svelte";
+    import { page } from '$app/stores'; // 1. Import the page store
 
-    let field = $state(" ");
-
+    let field = $state('none');
     let profiles = $state([]);
     let currentPage = $state(1);
     let loading = $state(true);
 
-    // Initial logic helper
     function getInitials(name) {
-        return name
-            ? name
-                  .split(" ")
-                  .filter(Boolean)
-                  .map((n) => n[0])
-                  .join("")
-                  .toUpperCase()
-            : "?";
+        return name ? name.split(" ").filter(Boolean).map((n) => n[0]).join("").toUpperCase() : "?";
     }
 
-    onMount(async () => {
-        const url = new URL(window.location.href);
-        const queryParams = new URLSearchParams(url.search);
+    // 2. Use $effect to watch for URL changes
+    $effect(() => {
+        // This line makes the entire effect "subscribe" to URL changes
+        const url = $page.url; 
+        const queryParams = url.searchParams;
 
-        // Get page from URL, default to 1
         currentPage = Number(queryParams.get("page") ?? 1);
+        field = queryParams.get("field") ?? 'none';
+        
+        loadProfiles();
+    });
 
-        field = String(queryParams.get("field") ?? "none");
-
-        // Calculate the range of IDs (e.g., Page 1: 1-5, Page 2: 6-10)
+    async function loadProfiles() {
+        loading = true;
         const startID = (currentPage - 1) * 5 + 1;
-        const endID = startID + 5;
-        let results = [];
-        if (field === "none") {
-            try {
-                const fetchPromises = [];
+        const endID = startID + 4; // Use +4 to fetch exactly 5 items (e.g. 1, 2, 3, 4, 5)
 
-                // Create 5 fetch requests simultaneously
+        try {
+            if (field === 'none') {
+                const fetchPromises = [];
                 for (let id = startID; id <= endID; id++) {
                     fetchPromises.push(
                         fetch(`http://127.0.0.1:5000/api/person/${id}`)
                             .then((res) => (res.ok ? res.json() : null))
-                            .catch(() => null), // Ignore failed IDs (e.g., if ID doesn't exist)
+                            .catch(() => null)
                     );
                 }
-
-                // Wait for all 5 to finish
-                results = await Promise.all(fetchPromises);
-
-                // Filter out any nulls (failed fetches) and update state
+                const results = await Promise.all(fetchPromises);
                 profiles = results.filter((p) => p !== null);
-                loading = false;
-            } catch (error) {
-                console.error("Directory fetch failed:", error);
-                loading = false;
-            }
-        } else {
-            try {
-                // Updated API endpoint for executives
+            } else {
                 const response = await fetch(`http://127.0.0.1:5000/api/people/field/${field}`);
-                profiles = await response.json();
-
-                const fetchPromises = [];
-
-                // Wait for all 5 to finish
-                const displayedPeople = profiles.slice(startID, endID);
-                // Create 5 fetch requests simultaneously
-                displayedPeople.forEach((person, index) => {
-                    fetchPromises.push(
-                        fetch(`http://127.0.0.1:5000/api/person/${person.id}`)
-                            .then((res) => (res.ok ? res.json() : null))
-                            .catch(() => null), // Ignore failed IDs (e.g., if ID doesn't exist)
-                    );
-                });
-
-                // Wait for all 5 to finish
-                results = await Promise.all(fetchPromises);
-
-                // Filter out any nulls (failed fetches) and update state
+                const allProfiles = await response.json();
+                
+                // Note: startID-1 because array indices start at 0
+                const displayedPeople = allProfiles.slice(startID - 1, startID + 4);
+                
+                const fetchPromises = displayedPeople.map(person =>
+                    fetch(`http://127.0.0.1:5000/api/person/${person.id}`)
+                        .then((res) => (res.ok ? res.json() : null))
+                        .catch(() => null)
+                );
+                
+                const results = await Promise.all(fetchPromises);
                 profiles = results.filter((p) => p !== null);
-                loading = false;
-            } catch (error) {
-                console.error("Directory fetch failed:", error);
-                loading = false;
             }
+        } catch (error) {
+            console.error("Fetch failed:", error);
+        } finally {
+            loading = false;
         }
-    });
+    }
 
     function changePage(step) {
         const next = currentPage + step;
-        window.location.href = `/?page=${next}`;
+        // Navigation will now trigger the $effect above
+        window.location.href = `/?page=${next}&field=${field}`;
     }
 </script>
 
@@ -108,12 +85,11 @@
 
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto fs-4 justify-content-center align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/account">Account</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/?field=none">People</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/?field=executive">Executives</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/?field=politician">Politicians</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/account">Account</a></li>
                 </ul>
             </div>
         </div>
@@ -143,7 +119,7 @@
                         <div class="name-row">
                             <h2>{person.name}</h2>
                         </div>
-                        <p class="subtitle">{person.role} · {person.party} · Transparency Score : {person.transparency_score}</p>
+                        <p class="subtitle">{person.role} {person.party ? person.party != 'none' : person.company} · Transparency Score : {person.transparency_score}</p>
 
                         <div class="tags">
                             {#each person.flags as flag}
